@@ -1,5 +1,5 @@
 
-new_pattern <- function(expr, env = caller_env()) {
+build_pattern <- function(expr, env = caller_env()) {
     env <- as_environment(rb, parent = env)
     res <- eval(expr, env)
 
@@ -7,8 +7,12 @@ new_pattern <- function(expr, env = caller_env()) {
 
 #' @export
 rb <- within(list(), {
-    literally <- function(string) {
-        # TODO
+    literally <- fixed <- function(string) {
+        str_replace_all(
+            string,
+            pattern = r"(([\.\|\(\)\[\]\{\}\^\$\?\*\+\\]))",
+            replacement = r"(\\\0)"
+        ) |> as_glue()
     }
     times <- function(pattern, times = 1:Inf, capture = FALSE) {
         validate_pattern(pattern)

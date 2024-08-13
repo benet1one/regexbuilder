@@ -66,6 +66,7 @@ is_pattern_atomic <- function(pattern) {
     pattern %in% atomic_patterns
 }
 is_pattern_atomic <- Vectorize(is_pattern_atomic)
+
 atomic_patterns <- {paste0("\\", c(letters, LETTERS)) |> c(
     "[:alnum:]",
     "[:alpha:]",
@@ -79,6 +80,12 @@ atomic_patterns <- {paste0("\\", c(letters, LETTERS)) |> c(
     "[:space:]",
     "[:upper:]",
     "[:xdigit:]⁠"
+)}
+special_characters <- {c(
+    ".", r"(\)", "|",
+    "+", "*", "?",
+    "[", "]", "(", ")", "{", "}",
+    "^", "$"
 )}
 
 meta_sequence <- function(letter, times = 1L, negate = FALSE) {
