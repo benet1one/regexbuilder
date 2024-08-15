@@ -11,16 +11,15 @@ times(pattern, n = 1:Inf, capture = FALSE)
 
 \item{n}{How many times to match the pattern.
 Can be an integer \code{a}, to match the pattern exactly \code{a} times;
-
 an integer range \code{a:b}, to match the pattern between \code{a} and
 \code{b} times, both inclusive. \code{b} can be \code{Inf};
-
 or one of the following characters: \code{?, +, *}.}
 
 \item{capture}{Logical indicating whether to capture the pattern, or
 a string indicating the name of the capture group.
+
 Beware this is not equivalent to using \code{capture(times(pattern, n))}.
-See \link{examples}.}
+See examples.}
 }
 \description{
 Adds an appropriate suffix after the pattern.
@@ -28,7 +27,7 @@ Adds an appropriate suffix after the pattern.
 \examples{
 times("A", 3L)
 times("[a-z]", 0:Inf)
-times("hey ?", "+")
+times("hey *", "+")
 
 ## Notice the difference
 times("\\\\d", 0:1, capture = TRUE)

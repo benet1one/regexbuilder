@@ -46,13 +46,13 @@ capture <- function(pattern, name = NULL) {
 #' a string indicating the name of the capture group.
 #'
 #' Beware this is not equivalent to using \code{capture(times(pattern, n))}.
-#' See \link{examples}.
+#' See examples.
 #'
 #' @export
 #' @examples
 #' times("A", 3L)
 #' times("[a-z]", 0:Inf)
-#' times("hey ?", "+")
+#' times("hey *", "+")
 #'
 #' ## Notice the difference
 #' times("\\d", 0:1, capture = TRUE)
@@ -96,17 +96,28 @@ times <- function(pattern, n = 1:Inf, capture = FALSE) {
 #' @param pattern String indicating the pattern to match.
 #' @param nmax Maximum number of times to match the pattern.
 #' @param capture Logical indicating whether to capture the pattern, or
-#' string indicating the name of the capture group.
+#' a string indicating the name of the capture group.
 #' @seealso [times()]
 #' @export
 maybe <- function(pattern, nmax = 1L, capture = FALSE) {
     times(pattern, n = 0:nmax, capture)
 }
 
+#' Match any character.
+#' @param n How many times to match the pattern. See \code{\link{times}}.
+#' @param include_newline Whether to also match \code{"\\n"}. FALSE by default.
 any_char <- function(n = 1L, include_newline = FALSE) {
     pattern <- ifelse(include_newline, no = ".", yes = "(?:.|\\n)")
     times(pattern, !!enexpr(n))
 }
+#' Match any character in a vector.
+#' @description
+#' Matches any of the \code{characters}.
+#' @param characters Vector of characters to match.
+#' @param n How many times to match the pattern. See \link{times}.
+#' @param negate If TRUE, the pattern will match any character but the ones
+#' in \code{characters}.
+#' @export
 any_of <- function(characters, n = 1L, negate = FALSE) {
     for (k in seq_along(characters))
         if (!is_pattern_atomic(characters))
@@ -116,9 +127,18 @@ any_of <- function(characters, n = 1L, negate = FALSE) {
     any <- glue("[", neg, glue_collapse(characters), "]")
     times(any, !!enexpr(n))
 }
+#' @rdname any_of
+#' @export
 none_of <- function(characters, n = 1L, negate = TRUE) {
     any_of(characters, !!enexpr(n), negate)
 }
+#' Match one of the patterns.
+#' @description
+#' Match any one of the \code{patterns}.
+#' @param patterns String vector of patterns to match.
+#' @param capture Logical indicating whether to capture the pattern, or
+#' a string indicating the name of the capture group.
+#' @export
 option <- function(patterns, capture = FALSE) {
     validate_pattern(patterns)
     options <- glue_collapse(patterns, sep = "|")
@@ -152,7 +172,12 @@ digit <- new_meta_function("d")
 whitespace <- new_meta_function("s")
 newline <- new_meta_function("n")
 
+#' Match the start or end of the string.
+#' @rdname start_end
+#' @export
 start <- function() '^'
+#' @rdname start_end
+#' @export
 end <- function() '$'
 
 # Substitution Functions -----------------------------
