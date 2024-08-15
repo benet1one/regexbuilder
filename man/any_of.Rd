@@ -12,7 +12,7 @@ none_of(characters, n = 1L, negate = TRUE)
 \arguments{
 \item{characters}{Vector of characters to match.}
 
-\item{n}{How many times to match the pattern. See \link{times}.}
+\item{n}{How many times to match the pattern. See \code{\link{times}}.}
 
 \item{negate}{If TRUE, the pattern will match any character but the ones
 in \code{characters}.}

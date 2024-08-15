@@ -31,7 +31,7 @@ capture <- function(pattern, name = NULL) {
     glue("(?<{name}>{pattern})")
 }
 
-#' Match a pattern \code{n} times.
+#' Match a pattern n times.
 #' @description
 #' Adds an appropriate suffix after the pattern.
 #'
@@ -59,7 +59,7 @@ capture <- function(pattern, name = NULL) {
 #' capture(times("\\d", 0:1))
 times <- function(pattern, n = 1:Inf, capture = FALSE) {
     validate_pattern(pattern)
-    n <- parse_times(enexpr(n))
+    n <- parse_times(enexpr(n), caller_env())
     suffix <- if (is_character(n))
         n
     else if (length(n) == 1L) {
@@ -114,7 +114,7 @@ any_char <- function(n = 1L, include_newline = FALSE) {
 #' @description
 #' Matches any of the \code{characters}.
 #' @param characters Vector of characters to match.
-#' @param n How many times to match the pattern. See \link{times}.
+#' @param n How many times to match the pattern. See \code{\link{times}}.
 #' @param negate If TRUE, the pattern will match any character but the ones
 #' in \code{characters}.
 #' @export
@@ -167,9 +167,31 @@ new_meta_function <- function(letter) {
     eval(call)
 }
 
+#' Meta Sequences
+#' @rdname meta_sequences
+#' @param n How many times to match the pattern. See \code{\link{times}}.
+#' @param negate Match anything but the pattern.
+#'
+#' @details
+#' \code{word() == '\w'}. Matches any letter, digit, or underscore.
+#' Equivalent to \code{"[a-zA-Z0-9_]"}.
+#'
+#' \code{digit() == '\d'}. Matches any digit. Equivalent to \code{"[0-9]"}.
+#'
+#' \code{whitespace() == '\s'}. Matches spaces, tabs, and newlines.
+#'
+#' \code{newline() == '\n'}. Matches newlines.
+#'
+#' @export
 word <- new_meta_function("w")
+#' @rdname meta_sequences
+#' @export
 digit <- new_meta_function("d")
+#' @rdname meta_sequences
+#' @export
 whitespace <- new_meta_function("s")
+#' @rdname meta_sequences
+#' @export
 newline <- new_meta_function("n")
 
 #' Match the start or end of the string.

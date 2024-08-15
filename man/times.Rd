@@ -2,7 +2,7 @@
 % Please edit documentation in R/main.R
 \name{times}
 \alias{times}
-\title{Match a pattern \code{n} times.}
+\title{Match a pattern n times.}
 \usage{
 times(pattern, n = 1:Inf, capture = FALSE)
 }

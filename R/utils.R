@@ -17,6 +17,8 @@ inside <- function(expr) {
 }
 
 parse_times <- function(n, env = caller_env(2L)) {
+    if (is_symbol(n))
+        n <- eval(n, env)
     if (is_integerish(n, n = 1L))
         return(n)
     if (is_character(n, n = 1L))
