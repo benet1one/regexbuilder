@@ -1,7 +1,7 @@
 Package: regexbuilder
 Type: Package
 Title: Build Regex Programatically
-Version: 0.2.0
+Version: 0.2.1
 Author: benetsugarboy
 Maintainer: benetsugarboy <benet1one@gmail.com>
 Description: Write readable and maintainable regular expressions.
