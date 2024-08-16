@@ -5,6 +5,7 @@
 \alias{digit}
 \alias{whitespace}
 \alias{newline}
+\alias{tab}
 \title{Meta Sequences}
 \usage{
 word(n = 1L, negate = FALSE)
@@ -14,6 +15,8 @@ digit(n = 1L, negate = FALSE)
 whitespace(n = 1L, negate = FALSE)
 
 newline(n = 1L, negate = FALSE)
+
+tab(n = 1L)
 }
 \arguments{
 \item{n}{How many times to match the pattern. See \code{\link{times}}.}
@@ -24,7 +27,7 @@ newline(n = 1L, negate = FALSE)
 Meta Sequences
 }
 \details{
-\code{word() == '\w'}. Matches any letter, digit or underscore.
+\code{word() == '\w'}. Matches any letter, digit, or underscore.
 Equivalent to \code{"[a-zA-Z0-9_]"}.
 
 \code{digit() == '\d'}. Matches any digit. Equivalent to \code{"[0-9]"}.
@@ -32,4 +35,7 @@ Equivalent to \code{"[a-zA-Z0-9_]"}.
 \code{whitespace() == '\s'}. Matches spaces, tabs, and newlines.
 
 \code{newline() == '\n'}. Matches newlines.
+
+\code{tab() == '\t'}. Matches tabs, but not consecutive spaces.
+In order to match \code{n} consecutive spaces, use \code{times(" ", n)}.
 }

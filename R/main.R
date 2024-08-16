@@ -182,6 +182,9 @@ new_meta_function <- function(letter) {
 #'
 #' \code{newline() == '\n'}. Matches newlines.
 #'
+#' \code{tab() == '\t'}. Matches tabs, but not consecutive spaces.
+#' In order to match \code{n} consecutive spaces, use \code{times(" ", n)}.
+#'
 #' @export
 word <- new_meta_function("w")
 #' @rdname meta_sequences
@@ -193,6 +196,11 @@ whitespace <- new_meta_function("s")
 #' @rdname meta_sequences
 #' @export
 newline <- new_meta_function("n")
+#' @rdname meta_sequences
+#' @export
+tab <- function(n = 1L) {
+    meta_sequence("t", !!enexpr(n), negate = FALSE)
+}
 
 #' Match the start or end of the string.
 #' @rdname start_end
